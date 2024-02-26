@@ -8,10 +8,11 @@ export default {
     extend: {
       colors: {
         "black": "#000",
-        "primary": "#e4e4e7",
+        "primary": "#FFFFFF",
         "secondary": "#A14A15",
         "HigherText": "#ffffff",
         "LowerText": "#a3a3a3",
+        "CardColor": "#EDEDED"
       }
     },
   },

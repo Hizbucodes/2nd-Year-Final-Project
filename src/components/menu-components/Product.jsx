@@ -1,39 +1,58 @@
-import React, { useEffect, useReducer } from 'react';
-import { INITIAL_VALUES, productReducer } from '../../reducers/productReducer';
-import { FETCH_ACTIONS } from '../../actions';
+import React, { useContext } from 'react';
+import ProductContext from '../../context/ProductContext';
+import ProductCard from './ProductCard';
+import Filter from './Filter';
+import CartContext from '../../context/CartContext';
+import Rating from '../home-components/Rating';
 
 
 const Product = () => {
 
-    const[state, dispatch] = useReducer(productReducer, INITIAL_VALUES);
+    const {product, loading, error} = useContext(ProductContext);
+    const { stateFilter: { byStock, byFastDelivery, byRating,sort, searchQuery}, dispatchFilter} = useContext(CartContext);
 
-    const {product, loading, error} = state;
+    const transformProducts = () => {
+      let sortedProducts = product;
 
-    useEffect(()=>{
-        dispatch({type: FETCH_ACTIONS.PROGRESS})
-        const fetch_products = async () =>{
-            try{
-                const response = await fetch('http://localhost:3500/products');
-                if(response.status === 200){
-                    const data = await response.json();
-                    dispatch({type: FETCH_ACTIONS.SUCCESS, data: data});
-                }
-            }catch(err){    
-                dispatch({type: FETCH_ACTIONS.ERROR, error: err.message})
-            };
-        };
+      if(sort){
+        sortedProducts= sortedProducts.sort((a,b)=>(
+          sort === 'lowToHigh' ? a.price-b.price : b.price-a.price
+        ));
+      }
 
-        fetch_products();
-    }, []);
+      if(!byStock){
+        sortedProducts = sortedProducts.filter((prod)=> prod.inStock);
+      }
+
+      if(byFastDelivery){
+        sortedProducts = sortedProducts.filter((prod)=> prod.fastDelivery);
+      }
+
+      if(byRating){
+        sortedProducts = sortedProducts.filter((prod)=> prod.ratings >= byRating)
+      }
+
+      if(searchQuery){
+        sortedProducts = sortedProducts.filter((prod)=> prod.name.toLowerCase().includes(searchQuery))
+      }
+
+      return sortedProducts;
+    };
+
+    console.log((transformProducts()));
 
   return (
-    <section className='bg-seconday min-h-screen w-full p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4'>
+    <section className='flex justify-center bg-primary'>
+        <Filter/>
+
+        <div className='grid w-full p-[20px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8'>
         {loading && <p>Loading...</p>}
-        <ul>
-            {product.map((prod)=>(
-                <li key={prod.id}>{prod.title}</li>
-            ))}
-        </ul>
+        
+        {transformProducts().map((prod)=>(
+            <ProductCard prod={prod} key={prod.id}/>
+        ))}
+        </div>
+     
     </section>
   )
 }
