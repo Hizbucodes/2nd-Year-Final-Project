@@ -45,9 +45,9 @@ const filterProductReducer = (state, action) =>{
         case FILTER_ACTIONS.CLEAR_FILTER:{
             return{
                 byStock: false,
-    byFastDelivery: false,
-    byRating: 0,
-    searchQuery: "",
+                byFastDelivery: false,
+                byRating: 0,
+                searchQuery: "",
             }
         }
 
