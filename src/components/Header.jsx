@@ -6,6 +6,8 @@ import { FaCartShopping } from "react-icons/fa6";
 import CartContext from '../context/CartContext';
 import { FaTrash } from "react-icons/fa";
 import { CART_ACTIONS } from '../actions';
+import { useUserAuth } from '../context/UserAuthContext';
+import { FiLogOut } from "react-icons/fi";
 
 const Header = () => {
 
@@ -38,10 +40,25 @@ const Header = () => {
             id: 5,
             link: "Feedback",
             to: "/feedback",
+        },
+        {
+            id: 6,
+            link: "Contact Us",
+            to: "/contact-us",
         }
     ]
 
     const[menuBar, setMenuBar] = useState(false);
+
+    const {user, logOut} = useUserAuth();
+
+    const handleLogOut = async () => {
+        try{
+            await logOut();
+        }catch(err){
+            console.log(err.message);
+        }
+    };  
 
   return (
     <>
@@ -64,9 +81,10 @@ const Header = () => {
             </ul>
         </div>
 
-            {/* Contact Us Button */}
-        <div className='bg-secondary p-3 hidden md:flex border border-secondary hover:bg-transparent duration-300'>
-                    <button>Contact Us</button>
+
+        <div className='bg-secondary p-3 hidden md:flex border border-secondary hover:bg-transparent duration-300 cursor-pointer px-8 items-center font-bold' onClick={handleLogOut}>
+                    <button>Log Out</button>
+                    <FiLogOut className='ml-4'/>
         </div>
 
                 <div className='md:hidden' onClick={()=> setMenuBar(!menuBar)}>
@@ -77,6 +95,8 @@ const Header = () => {
                     <span className='text-primary absolute -top-3 bg-secondary -right-3 rounded-full px-2 font-bold'>{cart.length}</span>
                     <FaCartShopping color='black' fontSize={20}/>
                 </div>
+
+                {/* <span>{user && user.email}</span> */}
 
                 {isDropDownOpen && (
                     <div className='bg-white p-2 w-[25%] absolute top-20 right-[13%] min-h-24 rounded-2xl text-black'>

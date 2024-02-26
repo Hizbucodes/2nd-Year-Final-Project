@@ -8,7 +8,7 @@ const ProductContainer = () => {
     const {state: {cart}, dispatch} = useContext(CartContext);
     
   return (
-    <div className=' pt-28 bg-red-50 w-[70%] min-h-screen flex flex-col gap-8'>
+    <div className=' pt-28 shadow-2xl w-[70%] min-h-screen flex flex-col gap-8'>
         {
                                 cart.map((prod)=>(
                                     <div  className='flex justify-between items-center gap-y-4 px-4 border-2 rounded-2xl p-2 mx-4'>
