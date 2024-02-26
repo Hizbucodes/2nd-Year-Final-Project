@@ -3,6 +3,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import CartContext from '../../context/CartContext';
 import { CART_ACTIONS } from '../../actions';
 import Rating from '../home-components/Rating';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({prod}) => {
 
@@ -10,7 +11,9 @@ const ProductCard = ({prod}) => {
 
   return (
     <div className='max-w-[300px] bg-CardColor  min-h-[430px] rounded-2xl flex flex-col gap-4 pb-4 mx-auto'>
+        <Link to={`/products/${prod.id}`}>
         <img src={prod.image} alt={prod.title} className='w-full h-[200px] object-cover rounded-t-2xl'/>
+        </Link>
 
       <h1 className='font-bold pl-2'>{prod.title}</h1>
       <div className='flex pl-1'>

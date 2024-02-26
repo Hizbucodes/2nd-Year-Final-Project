@@ -33,7 +33,7 @@ const Product = () => {
       }
 
       if(searchQuery){
-        sortedProducts = sortedProducts.filter((prod)=> prod.name.toLowerCase().includes(searchQuery))
+        sortedProducts = sortedProducts.filter((prod)=> prod.title.toLowerCase().includes(searchQuery))
       }
 
       return sortedProducts;
@@ -45,7 +45,7 @@ const Product = () => {
     <section className='flex justify-center bg-primary'>
         <Filter/>
 
-        <div className='grid w-full p-[20px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8'>
+        <div className='grid w-full p-[20px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 mx-auto'>
         {loading && <p>Loading...</p>}
         
         {transformProducts().map((prod)=>(
