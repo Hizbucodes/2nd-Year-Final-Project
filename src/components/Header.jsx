@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import menu from '../assets/cafe-lago-images/menu-svgrepo-com (1).svg';
 import logo from '../assets/cafe-lago-images/logo2.png';
+import { FaCartShopping } from "react-icons/fa6";
+import CartContext from '../context/CartContext';
+import { FaTrash } from "react-icons/fa";
+import { CART_ACTIONS } from '../actions';
 
 const Header = () => {
+
+    const {state: {cart}, dispatch} = useContext(CartContext);
+
+    const[isDropDownOpen, setIsDropDownOpen] = useState(false);
 
     const menuLinks = [
         {
@@ -64,6 +72,52 @@ const Header = () => {
                 <div className='md:hidden' onClick={()=> setMenuBar(!menuBar)}>
                     <img src={menu} alt="hamburger-menu" className='w-10'/>
                 </div>
+
+                <div className='bg-primary rounded-lg relative p-3 cursor-pointer' onClick={()=> setIsDropDownOpen(!isDropDownOpen)}>
+                    <span className='text-primary absolute -top-3 bg-secondary -right-3 rounded-full px-2 font-bold'>{cart.length}</span>
+                    <FaCartShopping color='black' fontSize={20}/>
+                </div>
+
+                {isDropDownOpen && (
+                    <div className='bg-white p-2 w-[25%] absolute top-20 right-[13%] min-h-24 rounded-2xl text-black'>
+                    {cart.length>0 ? 
+                    (
+                        <>
+                        <div className='flex flex-col gap-4 my-2 pb-4'>
+                            {
+                                cart.map((prod)=>(
+                                    <div  className='flex justify-between items-center gap-y-4 px-4 border-2 rounded-2xl p-2'>
+                                    <div className='flex gap-4'>
+                                        <img src={prod.image} alt={prod.title} className='w-[50px] object-cover rounded-full h-[50px]'/>
+                                    
+
+                                    <div className='flex flex-col font-bold'>
+                                        <p>{prod.title}</p>
+                                        <p>RS. {prod.price}</p>
+                                    </div>
+                                    </div>
+
+                                    <div onClick={()=> {dispatch({type: CART_ACTIONS.REMOVE_FROM_CART, payload: prod})}} className='cursor-pointer'>
+                                        <FaTrash/>
+                                    </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+
+                        <Link to='/cart'>
+                        <div className='bg-secondary p-2 text-center text-primary font-semibold rounded-2xl'>
+                            Go to Cart
+                        </div>
+                        </Link>
+                        </>
+                    ) 
+                    : 
+                    (
+                        <h1>Empty Cart</h1>
+                    )}
+                </div>
+                )}
     </header>
 
     {/* Mobile menu */}
