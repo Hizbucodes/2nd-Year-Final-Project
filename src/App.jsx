@@ -4,6 +4,7 @@ import MenuScreen from "./screens/MenuScreen"
 import { ProductProvider } from "./context/ProductContext"
 import { CartProvider } from "./context/CartContext"
 import CartScreen from "./screens/CartScreen"
+import ContactUsScreen from "./screens/ContactUsScreen"
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeScreen/>}/>
         <Route path="/menu" element={<MenuScreen/>}/>
-        <Route path="/cart" element={<CartScreen/>}/>
+        <Route path="/cart" element={<CartScreen/>}/>        
+        <Route path="/about-us" element={<ContactUsScreen/>}/>
       </Routes>
       </CartProvider>
       </ProductProvider>
