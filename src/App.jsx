@@ -9,6 +9,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import { UserAuthContextProvider } from "./context/UserAuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
+import ForgotPassword from "./components/ForgotPassword"
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/products/:id" element={<ProtectedRoute><SingleProductScreen/></ProtectedRoute>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
       </Routes>
       </UserAuthContextProvider>
       </CartProvider>
