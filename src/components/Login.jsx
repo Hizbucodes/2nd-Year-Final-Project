@@ -59,9 +59,11 @@ const Login = () => {
                 onChange={(e)=> setPassword(e.target.value)}
                 />
 
-            <span className='font-bold text-end'>
+            <Link to='/forgot-password' className='text-end'>
+            <span className='font-bold '>
                 Forgot Password?
             </span>
+            </Link>
 
                 <button className='bg-black text-primary p-4 rounded-2xl font-bold tracking-wider'>Login</button>
             </form>
